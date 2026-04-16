@@ -1,6 +1,7 @@
 package se.jensen.yuki.onlinestorebackend.security.service;
 
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -66,9 +67,10 @@ public class JwtService {
         String key = pem
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
+                .replaceAll("\\\\", "")
                 .replaceAll("\\s", "");
 
-        byte[] decoded = Base64.getDecoder().decode(pem);
+        byte[] decoded = Base64.getDecoder().decode(key);
 
         return KeyFactory.getInstance("RSA")
                 .generatePrivate(new PKCS8EncodedKeySpec(decoded));
