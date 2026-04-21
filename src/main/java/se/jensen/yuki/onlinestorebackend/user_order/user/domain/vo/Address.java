@@ -1,5 +1,6 @@
 package se.jensen.yuki.onlinestorebackend.user_order.user.domain.vo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
@@ -7,9 +8,13 @@ import java.util.regex.Pattern;
 
 @Embeddable
 public class Address {
+    @Column(name = "street", nullable = false, length = 100)
     private String street;
+    @Column(name = "postal_code")
     private String postalCode;
+    @Column(name = "city", nullable = false, length = 50)
     private String city;
+    @Column(name = "country", nullable = false, length = 50)
     private String country;
     // Simple regex pattern for basic Address validation
     private static final Pattern STREET_PATTERN = Pattern.compile("^[A-Za-zÅÄÖåäö0-9\\s.,\\-]{1,100}$");

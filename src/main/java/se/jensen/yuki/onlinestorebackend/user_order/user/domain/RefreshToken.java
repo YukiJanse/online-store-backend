@@ -24,10 +24,13 @@ public class RefreshToken {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserJpaEntity user;
 
+    @Column(nullable = false)
     private String token;
 
+    @Column(nullable = false)
     private boolean revoked;
 
+    @Column(nullable = false)
     private Instant expiresAt;
 
     @CreationTimestamp
