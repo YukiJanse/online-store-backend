@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+
+  pre_build:
+    commands:
+      - echo "Running tests..."
+      - mvn clean verify
+
+  build:
+    commands:
+      - echo "Building application..."
+      - mvn package -DskipTests
+
+artifacts:
+  files:
+    - target/*.jar
+  discard-paths: no
+
+reports:
+  unit-test-reports:
+    files:
+      - 'target/surefire-reports/*.xml'
+    file-format: JUNITXML

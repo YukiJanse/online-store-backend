@@ -1,0 +1,26 @@
+version: 0.2
+
+# Triggered on: pushes to any branch except main, and/or pull requests.
+# Purpose: quick validation. Unit tests only. Reports status back to GitHub.
+# Does NOT build a Docker image — no deploy from here.
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+  pre_build:
+    commands:
+      - echo "=== PR check for $CODEBUILD_RESOLVED_SOURCE_VERSION ==="
+  build:
+    commands:
+      - echo "=== Unit tests ==="
+      - mvn -B test
+  post_build:
+    commands:
+      - echo "=== PR check complete ==="
+
+reports:
+  unit-test-reports:
+    files:
+      - 'target/surefire-reports/*.xml'
+    file-format: JUNITXML
