@@ -5,20 +5,10 @@ phases:
     runtime-versions:
       java: corretto21
 
-  pre_build:
+  build:
     commands:
       - echo "Running tests..."
       - mvn clean verify
-
-  build:
-    commands:
-      - echo "Building application..."
-      - mvn package -DskipTests
-
-artifacts:
-  files:
-    - target/*.jar
-  discard-paths: no
 
 reports:
   unit-test-reports:
