@@ -9,7 +9,8 @@ phases:
     commands:
       - echo "Building application..."
       - mvn package -DskipTests
+      - cp target/*.jar app.jar
 
 artifacts:
   files:
-    - target/*.jar
+    - app.jar
