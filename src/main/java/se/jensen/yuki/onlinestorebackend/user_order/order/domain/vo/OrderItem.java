@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import se.jensen.yuki.onlinestorebackend.product.model.ProductData;
 
 import java.math.BigDecimal;
 import java.util.Objects;

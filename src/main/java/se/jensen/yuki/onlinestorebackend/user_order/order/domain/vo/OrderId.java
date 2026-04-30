@@ -2,7 +2,6 @@ package se.jensen.yuki.onlinestorebackend.user_order.order.domain.vo;
 
 import lombok.Getter;
 
-import java.util.Objects;
 
 @Getter
 public class OrderId {

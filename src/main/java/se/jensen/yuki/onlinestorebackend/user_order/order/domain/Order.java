@@ -3,7 +3,6 @@ package se.jensen.yuki.onlinestorebackend.user_order.order.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import se.jensen.yuki.onlinestorebackend.shared.exception.CannotModifyOrderException;
 import se.jensen.yuki.onlinestorebackend.shared.exception.OrderNotFoundException;
 import se.jensen.yuki.onlinestorebackend.user_order.order.domain.vo.OrderId;
 import se.jensen.yuki.onlinestorebackend.user_order.order.domain.vo.OrderItem;
