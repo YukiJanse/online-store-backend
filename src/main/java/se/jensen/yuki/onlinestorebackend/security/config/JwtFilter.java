@@ -32,7 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
         log.debug("Starting JWT filter for request: {}", request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Authorization")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             log.debug("No auth header");
             filterChain.doFilter(request, response);
             return;
