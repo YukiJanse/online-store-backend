@@ -14,7 +14,7 @@ import se.jensen.yuki.onlinestorebackend.user_order.order.web.dto.OrderSummaryDT
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/v1/orders")
 @RequiredArgsConstructor
 public class OrderQueryController {
     private final OrderQueryService orderQueryService;

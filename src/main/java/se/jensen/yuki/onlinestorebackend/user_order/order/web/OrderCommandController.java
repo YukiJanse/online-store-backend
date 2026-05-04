@@ -14,11 +14,11 @@ import se.jensen.yuki.onlinestorebackend.user_order.order.web.dto.OrderDetailDTO
 import se.jensen.yuki.onlinestorebackend.user_order.order.web.dto.ShippingInfoDTO;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/v1/orders")
 @RequiredArgsConstructor
 public class OrderCommandController {
     private final CreateOrderUseCase createOrderUseCase;
-    private final ModifyItemQuantityUseCase modifyItemQUantityUseCase;
+    private final ModifyItemQuantityUseCase modifyItemQuantityUseCase;
     private final ModifyOrderShippingInfoUseCase modifyOrderShippingInfoUseCase;
     private final CancelOrderUseCase cancelOrderUseCase;
     private final CurrentUserProvider currentUserProvider;
@@ -31,21 +31,22 @@ public class OrderCommandController {
     }
 
     @PutMapping("/{orderId}/quantity")
-    public ResponseEntity<OrderDetailDTO> modifyItemQuantity(@RequestParam Long orderId,
+    public ResponseEntity<OrderDetailDTO> modifyItemQuantity(@PathVariable Long orderId,
                                                              @RequestBody ModifyItemQuantityRequestDTO modifyItemQuantityRequestDTO) {
         return ResponseEntity.ok()
-                .body(modifyItemQUantityUseCase.execute(orderId, modifyItemQuantityRequestDTO));
+                .body(modifyItemQuantityUseCase.execute(orderId, modifyItemQuantityRequestDTO));
     }
 
-    @PutMapping("/{orderId}/shipping-info")
-    public ResponseEntity<OrderDetailDTO> modifyShippingInfo(@RequestParam Long orderId,
+    @PutMapping("/{orderId}/shipp" +
+            "ing-info")
+    public ResponseEntity<OrderDetailDTO> modifyShippingInfo(@PathVariable Long orderId,
                                                              @RequestBody ShippingInfoDTO shippingInfoDTO) {
         return ResponseEntity.ok()
                 .body(modifyOrderShippingInfoUseCase.execute(orderId, shippingInfoDTO));
     }
 
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<Void> deleteOrder(@RequestParam Long orderId) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         Long userId = currentUserProvider.currentUserId();
         cancelOrderUseCase.execute(orderId, userId);
         return ResponseEntity.noContent().build();
