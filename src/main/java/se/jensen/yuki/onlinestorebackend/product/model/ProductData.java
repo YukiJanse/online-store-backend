@@ -1,6 +1,8 @@
 package se.jensen.yuki.onlinestorebackend.product.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 public class ProductData {
