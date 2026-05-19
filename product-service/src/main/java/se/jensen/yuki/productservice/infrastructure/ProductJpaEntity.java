@@ -35,6 +35,9 @@ public class ProductJpaEntity {
     @Column(nullable = false)
     private String image;
 
+    @Column(nullable = false)
+    private int inventory;
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "rate", column = @Column(name = "rating_rate")),

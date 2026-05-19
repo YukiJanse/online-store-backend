@@ -2,10 +2,7 @@ package se.jensen.yuki.productservice.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.jensen.yuki.productservice.application.ProductService;
 import se.jensen.yuki.productservice.web.dto.ProductDTO;
 
@@ -31,5 +28,12 @@ public class ProductController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping("/inventory/{productId}")
+    public ResponseEntity<Void> checkInventory(@PathVariable Long productId, @RequestParam int quantity) {
+        productService.hasEnoughInventory(productId, quantity);
+
+        return ResponseEntity.ok().build();
     }
 }
