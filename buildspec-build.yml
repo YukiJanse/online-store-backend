@@ -5,12 +5,24 @@ phases:
     runtime-versions:
       java: corretto21
 
+  prebuild:
+    commands:
+      - echo "Logging into Docker Hub...."
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
   build:
     commands:
       - echo "Building application..."
-      - mvn package -DskipTests
-      - cp target/*.jar app.jar
+      - mvn clean package -DskipTests
 
-artifacts:
-  files:
-    - app.jar
+      - echo "Building product-service image..."
+      - docker build -t $DOCKER_USERNAME/product-service ./product-service
+
+      - echo "building user-order-service image..."
+      - docker build -t $DOCKER_USERNAME/user-order-service ./user-order-service
+
+  post_build:
+    commands:
+      - echo "Pushing images..."
+      - docker push $DOCKER_USERNAME/product-service
+      - docker push $DOCKER_USERNAME/user-order-service
