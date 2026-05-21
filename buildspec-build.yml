@@ -26,3 +26,10 @@ phases:
       - echo "Pushing images..."
       - docker push $DOCKER_USERNAME/product-service
       - docker push $DOCKER_USERNAME/user-order-service
+
+
+artifacts:
+  files:
+    - appspec.yml
+    - docker-compose.yml
+    - scripts/**/*
