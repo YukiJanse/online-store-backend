@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   user-order-service:
+    image: yukijanse/user-order-service:latest
     restart: always
-    build: ./user-order-service
     container_name: user-order-service
     ports:
       - "5000:5000"
@@ -15,8 +13,8 @@ services:
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
 
   product-service:
+    image: yukijanse/product-service:latest
     restart: always
-    build: ./product-service
     container_name: product-service
     ports:
       - "5001:5001"
