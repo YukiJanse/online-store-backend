@@ -2,4 +2,4 @@
 
 cd /home/ec2-user/app || exit 0
 
-docker compose down || true
+docker compose --env-file /home/ec2-user/.env down || true
