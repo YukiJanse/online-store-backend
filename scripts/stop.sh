@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd /home/ec2-user
+cd /home/ec2-user/app || exit 0
 
-docker compose down
+docker compose down || true
