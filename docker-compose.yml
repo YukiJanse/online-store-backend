@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  user-order-service:
+    restart: always
+    build: ./user-order-service
+    container_name: user-order-service
+    ports:
+      - "5000:5000"
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+
+  product-service:
+    restart: always
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "5001:5001"
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
