@@ -1,45 +1,28 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres-db
-    environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
   user-order-service:
+    restart: always
     build: ./user-order-service
     container_name: user-order-service
-    depends_on:
-      - postgres
     ports:
       - "5000:5000"
     environment:
-      DB_PASSWORD: password
-      DB_URL: jdbc:postgresql://postgres:5432/mydb
-      DB_USER: user
-      JWT_PRIVATE_KEY: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCYXH9Wr9EFWe5MNyYD5ETLwbDEqLiYWPudOZ1lKEe35N5g7zyMgToS8RMlvbl43naPTtwiN64+xaBnPS4WGeg0Bf3RP9cMrArOaKO4JCRPNqbpapJ7cjXUnF44CdqTaB8FnG3+VHgqm/9Mc0tUnOqSYS4/6eZEWRn66DafOxRI9rD+vvtH3B+5epNH6/FCS2+nRtHcN8yrbweDGbxRMo48mn7xKK+krUGyABjlNnsPVs36QTjZqcanRhIXAIMXjlrapIWUeGRozcYPVUSKtvvpNGvdqSZ1No620nfpzVNOU5dtMPOo4TW8x95uMJP/j2Icnnr4AlIy0N9BrYxO5LTzAgMBAAECggEAR7Nj464qvgtz1t8vHy6552+X2fySnnNlubhm5zd9BMAKnPCI/JBF/asAuUafNY/vmIJimyG7+ON1GJCUkycO/QiCyYnzEI4YKcnZnis4ASU1iGw0Ui7NwWfy+Qk+GRerXa8fnkwvHtI540bwwPl1dHySUNaonCqYTNkh925MngbsHTc9pZ1TridUWA8DdLsGWUdVaO3dR1wHfzNjyFlEmX29jLl5aDag5uGqxd34EC0ikvkNT3FHM2Qk7LuM+eyJz2HFBQQl+NvSPvb2CssBAezq7v9wKNHRxcfHt5F2rcaoZgO37IiSbNm+5dPF47PxwH/6sAJ3DWhsEupqENdenQKBgQDIn6o7OWsYuWbe3aYwAwu84ejewbLMUgo+5LE7Ifk5viUAnehVgCGngZquRSZxzOlUXvBwSyd+U4Z0zODUE3A8+iGzHkwRWeoKStT2Sus9633egFCNIFmg32RLvApFBl4AVYoEXRNXklat8kUnIL/3hYN5OHmOf4Du7odE6WzYDQKBgQDCaoyl4tj0nFaJSWD2u8Xs1JnekOL4OrzEHBU77m8WtP+uDrsDAKQlW/+FuvIq2bTy1rzh9/2xd92CnN0HZEqTj+zHY/kPhWOo873mRVT4zgxOTnB/uwi51Xmjxg/u2WgBzm+/1fyiGp62IT9mUTratKQTXbhGqaaTT4n1tX+A/wKBgQCyC0h20Mkjov4RUSF4QGu9T7trXPlBbJldIXXL5aWZQg7ykjCrGFBFqLZObF3m5pQ35R16eqfs61FK/LuWWj3kT5Nys7OMPoB+a9S9UtWcGQ6WVMenxwrjwvzuXU273h+0KjWXE8bjk6JLMtN+GwliMGHyRVVTSgJxiMwRMxr+TQKBgHUAjK6Uy/7CS64JlCpJLT9vXz67sWy0ZMAdKoZL410mBq2ovdF7xE2bhTblIDK7nJN8umW/ylTQj2W4o6h8KgmOV3BT8SLvIuAd+E4psY6e6ncB6+BjHkhAehke7J3RBy/3Hfe0f3rLTHLNpYsdHa9bgVcKUwlrtgz3lE5kMVzfAoGBAKeTUBrBh9+rl2HkX3cD8R2++UieI/Lltr0aqevy+6wTuM/Jq0BhVoTzx488iyyVpVCVuqKn+lKHHikBFhvg50Wu27PUxqPhw2LH7cMWrG4zPW7kVJm38kOb0H3IC+sRDS276nBw1BkqYGURJcvgRDfPe1AuUViHB3Gp52KBk+2N
-      JWT_PUBLIC_KEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmFx/Vq/RBVnuTDcmA+REy8GwxKi4mFj7nTmdZShHt+TeYO88jIE6EvETJb25eN52j07cIjeuPsWgZz0uFhnoNAX90T/XDKwKzmijuCQkTzam6WqSe3I11JxeOAnak2gfBZxt/lR4Kpv/THNLVJzqkmEuP+nmRFkZ+ug2nzsUSPaw/r77R9wfuXqTR+vxQktvp0bR3DfMq28Hgxm8UTKOPJp+8SivpK1BsgAY5TZ7D1bN+kE42anGp0YSFwCDF45a2qSFlHhkaM3GD1VEirb76TRr3akmdTaOttJ36c1TTlOXbTDzqOE1vMfebjCT/49iHJ56+AJSMtDfQa2MTuS08wIDAQAB
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
 
   product-service:
+    restart: always
     build: ./product-service
     container_name: product-service
-    depends_on:
-      - postgres
     ports:
       - "5001:5001"
     environment:
-      DB_PASSWORD: password
-      DB_URL: jdbc:postgresql://postgres:5432/mydb
-      DB_USER: user
-      JWT_PRIVATE_KEY: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCYXH9Wr9EFWe5MNyYD5ETLwbDEqLiYWPudOZ1lKEe35N5g7zyMgToS8RMlvbl43naPTtwiN64+xaBnPS4WGeg0Bf3RP9cMrArOaKO4JCRPNqbpapJ7cjXUnF44CdqTaB8FnG3+VHgqm/9Mc0tUnOqSYS4/6eZEWRn66DafOxRI9rD+vvtH3B+5epNH6/FCS2+nRtHcN8yrbweDGbxRMo48mn7xKK+krUGyABjlNnsPVs36QTjZqcanRhIXAIMXjlrapIWUeGRozcYPVUSKtvvpNGvdqSZ1No620nfpzVNOU5dtMPOo4TW8x95uMJP/j2Icnnr4AlIy0N9BrYxO5LTzAgMBAAECggEAR7Nj464qvgtz1t8vHy6552+X2fySnnNlubhm5zd9BMAKnPCI/JBF/asAuUafNY/vmIJimyG7+ON1GJCUkycO/QiCyYnzEI4YKcnZnis4ASU1iGw0Ui7NwWfy+Qk+GRerXa8fnkwvHtI540bwwPl1dHySUNaonCqYTNkh925MngbsHTc9pZ1TridUWA8DdLsGWUdVaO3dR1wHfzNjyFlEmX29jLl5aDag5uGqxd34EC0ikvkNT3FHM2Qk7LuM+eyJz2HFBQQl+NvSPvb2CssBAezq7v9wKNHRxcfHt5F2rcaoZgO37IiSbNm+5dPF47PxwH/6sAJ3DWhsEupqENdenQKBgQDIn6o7OWsYuWbe3aYwAwu84ejewbLMUgo+5LE7Ifk5viUAnehVgCGngZquRSZxzOlUXvBwSyd+U4Z0zODUE3A8+iGzHkwRWeoKStT2Sus9633egFCNIFmg32RLvApFBl4AVYoEXRNXklat8kUnIL/3hYN5OHmOf4Du7odE6WzYDQKBgQDCaoyl4tj0nFaJSWD2u8Xs1JnekOL4OrzEHBU77m8WtP+uDrsDAKQlW/+FuvIq2bTy1rzh9/2xd92CnN0HZEqTj+zHY/kPhWOo873mRVT4zgxOTnB/uwi51Xmjxg/u2WgBzm+/1fyiGp62IT9mUTratKQTXbhGqaaTT4n1tX+A/wKBgQCyC0h20Mkjov4RUSF4QGu9T7trXPlBbJldIXXL5aWZQg7ykjCrGFBFqLZObF3m5pQ35R16eqfs61FK/LuWWj3kT5Nys7OMPoB+a9S9UtWcGQ6WVMenxwrjwvzuXU273h+0KjWXE8bjk6JLMtN+GwliMGHyRVVTSgJxiMwRMxr+TQKBgHUAjK6Uy/7CS64JlCpJLT9vXz67sWy0ZMAdKoZL410mBq2ovdF7xE2bhTblIDK7nJN8umW/ylTQj2W4o6h8KgmOV3BT8SLvIuAd+E4psY6e6ncB6+BjHkhAehke7J3RBy/3Hfe0f3rLTHLNpYsdHa9bgVcKUwlrtgz3lE5kMVzfAoGBAKeTUBrBh9+rl2HkX3cD8R2++UieI/Lltr0aqevy+6wTuM/Jq0BhVoTzx488iyyVpVCVuqKn+lKHHikBFhvg50Wu27PUxqPhw2LH7cMWrG4zPW7kVJm38kOb0H3IC+sRDS276nBw1BkqYGURJcvgRDfPe1AuUViHB3Gp52KBk+2N
-      JWT_PUBLIC_KEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmFx/Vq/RBVnuTDcmA+REy8GwxKi4mFj7nTmdZShHt+TeYO88jIE6EvETJb25eN52j07cIjeuPsWgZz0uFhnoNAX90T/XDKwKzmijuCQkTzam6WqSe3I11JxeOAnak2gfBZxt/lR4Kpv/THNLVJzqkmEuP+nmRFkZ+ug2nzsUSPaw/r77R9wfuXqTR+vxQktvp0bR3DfMq28Hgxm8UTKOPJp+8SivpK1BsgAY5TZ7D1bN+kE42anGp0YSFwCDF45a2qSFlHhkaM3GD1VEirb76TRr3akmdTaOttJ36c1TTlOXbTDzqOE1vMfebjCT/49iHJ56+AJSMtDfQa2MTuS08wIDAQAB
-
-volumes:
-  postgres-data:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}

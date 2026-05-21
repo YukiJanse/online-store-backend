@@ -3,4 +3,4 @@
 cd /home/ec2-user
 
 docker compose pull
-docker compose up -d
+docker compose --env-file ~/.env up -d
