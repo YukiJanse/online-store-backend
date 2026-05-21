@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       java: corretto21
 
-  prebuild:
+  pre_build:
     commands:
       - echo "Logging into Docker Hub...."
       - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
