@@ -31,17 +31,18 @@ public class JwtFilter extends OncePerRequestFilter {
     );
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+
+        return PUBLIC_PATHS.stream()
+                .anyMatch(path::startsWith);
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         log.debug("Starting JWT filter for request: {}", request.getRequestURI());
-
-        String path = request.getRequestURI();
-
-        if (PUBLIC_PATHS.stream().anyMatch(path::startsWith)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         final String authHeader = request.getHeader("Authorization");
 
