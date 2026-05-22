@@ -15,6 +15,7 @@ import se.jensen.yuki.productservice.security.service.JwtService;
 import se.jensen.yuki.productservice.shared.exception.UserNotFoundException;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -22,11 +23,26 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
+    private static final List<String> PUBLIC_PATHS = List.of(
+            "/actuator",
+            "/v1/user",
+            "/v3/api-docs",
+            "/swagger-ui"
+    );
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         log.debug("Starting JWT filter for request: {}", request.getRequestURI());
+
+        String path = request.getRequestURI();
+
+        if (PUBLIC_PATHS.stream().anyMatch(path::startsWith)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
