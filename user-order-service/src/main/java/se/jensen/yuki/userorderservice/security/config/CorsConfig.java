@@ -21,7 +21,8 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         List<String> allowedOrigins = List.of(
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "http://94.255.243.225"
         );
 
         // Allow all origins
