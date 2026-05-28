@@ -2,7 +2,6 @@ services:
   user-order-service:
     image: yukijanse/user-order-service:latest
     restart: always
-    container_name: user-order-service
     ports:
       - "5000:5000"
     environment:
@@ -15,7 +14,6 @@ services:
   product-service:
     image: yukijanse/product-service:latest
     restart: always
-    container_name: product-service
     ports:
       - "5001:5001"
     environment:
