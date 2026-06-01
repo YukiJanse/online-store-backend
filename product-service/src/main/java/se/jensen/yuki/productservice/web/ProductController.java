@@ -21,6 +21,13 @@ public class ProductController {
                 .body(productService.getAllProducts());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
+        return ResponseEntity
+                .ok()
+                .body(productService.getProductById(id));
+    }
+
     @PostMapping("/sync")
     public ResponseEntity<Void> fetchProductsToDatabase() {
         productService.fetchProductsToDatabase();
