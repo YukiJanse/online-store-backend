@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/user")
+@RequestMapping("/v1/users")
 public class UserCommandController {
     private final LoginUserUseCase loginUserUseCase;
     private final RegisterUserUseCase registerUserUseCase;
