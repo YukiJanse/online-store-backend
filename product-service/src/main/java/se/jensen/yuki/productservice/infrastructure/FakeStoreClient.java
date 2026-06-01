@@ -39,4 +39,19 @@ public class FakeStoreClient {
 
         return productDTOList;
     }
+
+    public ProductDTO getProductById(Long id) {
+        return webClient.get()
+                .uri("https://fakestoreapi.com/products/" + id)
+                .retrieve()
+                .onStatus(
+                        HttpStatusCode::isError,
+                        response -> Mono.error(
+                                new RuntimeException("FakeStore API error")
+                        )
+                )
+                .bodyToMono(ProductDTO.class)
+                .doOnNext(product -> log.info("Received product: {}", product))
+                .block();
+    }
 }

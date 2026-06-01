@@ -54,4 +54,8 @@ public class ProductService {
             throw new InsufficientInventoryException("The inventory is not enough for the order");
         }
     }
+
+    public ProductDTO getProductById(Long id) {
+        return fakeStoreClient.getProductById(id);
+    }
 }
