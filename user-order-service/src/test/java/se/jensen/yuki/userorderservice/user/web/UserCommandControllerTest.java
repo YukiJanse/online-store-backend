@@ -39,7 +39,7 @@ class UserCommandControllerTest {
 
         when(registerUserUseCase.execute(any())).thenReturn(tokenPair);
 
-        mockMvc.perform(post("/v1/user/register")
+        mockMvc.perform(post("/v1/users/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -65,7 +65,7 @@ class UserCommandControllerTest {
 
         when(loginUserUseCase.execute(any())).thenReturn(tokenPair);
 
-        mockMvc.perform(post("/v1/user/login")
+        mockMvc.perform(post("/v1/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
