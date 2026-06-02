@@ -26,21 +26,6 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserLoadService userLoadService;
 
-    private static final List<String> PUBLIC_PATHS = List.of(
-            "/actuator",
-            "/v1/user",
-            "/v3/api-docs",
-            "/swagger-ui"
-    );
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getRequestURI();
-
-        return PUBLIC_PATHS.stream()
-                .anyMatch(path::startsWith);
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
