@@ -1,6 +1,7 @@
 package se.jensen.yuki.userorderservice.user.application;
 
 import se.jensen.yuki.userorderservice.user.infrastructure.UserJpaEntity;
+import se.jensen.yuki.userorderservice.user.web.dto.UserInfoDTO;
 
 
 public interface UserLoadService {
@@ -19,4 +20,6 @@ public interface UserLoadService {
      * @return the UserJpaEntity corresponding to the given email, or throw an exception if not found
      */
     UserJpaEntity requireJpaByEmail(String email);
+
+    UserInfoDTO requireUserInfoById(Long id);
 }
