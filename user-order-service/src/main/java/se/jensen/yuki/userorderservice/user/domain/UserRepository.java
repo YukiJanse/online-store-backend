@@ -22,7 +22,7 @@ public interface UserRepository {
      *
      * @param user the User to save
      */
-    void save(User user);
+    User save(User user);
 
     /**
      * Checks if a User exists in the repository by their email address.

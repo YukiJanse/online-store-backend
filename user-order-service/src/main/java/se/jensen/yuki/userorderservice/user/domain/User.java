@@ -156,4 +156,23 @@ public class User {
 
         this.lastName = newLastName;
     }
+
+    /**
+     * Updates the user's first or last name. The new names must not be null and either one must be different from the current one.
+     *
+     * @param newFirstName the new first name to set, must not be null and must be different from the current first name
+     * @param newLastName the new last name to set, must not be null and must be different from the current last name
+     * @throws IllegalArgumentException if the new last name is null or the same as the current last name
+     */
+    public void changeNames(FirstName newFirstName, LastName newLastName) {
+        Objects.requireNonNull(newFirstName, "New first name cannot be null");
+        Objects.requireNonNull(newLastName, "New last name cannot be null");
+
+        if (this.firstName.equals(newFirstName) && this.lastName.equals(newLastName)) {
+            throw new IllegalArgumentException("Either new first or last name must be different from the current one.");
+        }
+
+        this.firstName = newFirstName;
+        this.lastName = newLastName;
+    }
 }

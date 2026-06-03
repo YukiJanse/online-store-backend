@@ -5,13 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.jensen.yuki.userorderservice.user.application.LoginUserUseCase;
-import se.jensen.yuki.userorderservice.user.application.RefreshTokenService;
-import se.jensen.yuki.userorderservice.user.application.RegisterUserUseCase;
-import se.jensen.yuki.userorderservice.user.application.TokenPair;
-import se.jensen.yuki.userorderservice.user.web.dto.AuthRegisterRequestDTO;
-import se.jensen.yuki.userorderservice.user.web.dto.AuthResponseDTO;
-import se.jensen.yuki.userorderservice.user.web.dto.LoginDTO;
+import se.jensen.yuki.userorderservice.security.service.CurrentUserProvider;
+import se.jensen.yuki.userorderservice.user.application.*;
+import se.jensen.yuki.userorderservice.user.web.dto.*;
 
 import java.util.Optional;
 
@@ -22,6 +18,8 @@ public class UserCommandController {
     private final LoginUserUseCase loginUserUseCase;
     private final RegisterUserUseCase registerUserUseCase;
     private final RefreshTokenService refreshTokenService;
+    private final ChangeNamesUseCase changeNamesUseCase;
+    private final CurrentUserProvider currentUserProvider;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> registerUser(@RequestBody AuthRegisterRequestDTO requestDTO,
@@ -80,5 +78,12 @@ public class UserCommandController {
                 .sameSite("Strict")
                 .build();
         response.addHeader("Set-Cookie", cookie.toString());
+    }
+
+    @PutMapping("names")
+    public ResponseEntity<UserInfoDTO> changeNames(@RequestBody ChangeNamesRequestDTO requestDTO) {
+        return ResponseEntity
+                .ok()
+                .body(changeNamesUseCase.execute(currentUserProvider.currentUserId(), requestDTO));
     }
 }

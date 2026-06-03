@@ -1,10 +1,12 @@
 package se.jensen.yuki.userorderservice.user.domain.vo.mapper;
 
+import org.mapstruct.Mapper;
 import se.jensen.yuki.userorderservice.user.domain.vo.FirstName;
 
 /**
  * MapStruct mapper for converting between FirstName value object and String.
  */
+@Mapper(componentModel = "spring")
 public interface FirstNameMapper {
     /**
      * Maps a firstName value object to its String representation.
