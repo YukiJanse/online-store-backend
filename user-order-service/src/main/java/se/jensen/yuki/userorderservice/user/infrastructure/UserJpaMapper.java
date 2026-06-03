@@ -9,6 +9,8 @@ public class UserJpaMapper {
     public void toEntity(User user, UserJpaEntity entity) {
         entity.setId(user.getId().getValue());
         entity.setUsername(user.getUsername().getValue());
+        entity.setFirstName(user.getFirstName().getValue());
+        entity.setLastName(user.getLastName().getValue());
         entity.setEmail(user.getEmail().getValue());
         entity.setPassword(user.getPassword().getValue());
         entity.setAddress(user.getAddress());
@@ -20,6 +22,8 @@ public class UserJpaMapper {
         return User.reconstruct(
                 UserId.of(entity.getId()),
                 Username.of(entity.getUsername()),
+                FirstName.of(entity.getFirstName()),
+                LastName.of(entity.getLastName()),
                 Email.of(entity.getEmail()),
                 PhoneNumber.of(entity.getPhoneNumber()),
                 HashedPassword.of(entity.getPassword()),

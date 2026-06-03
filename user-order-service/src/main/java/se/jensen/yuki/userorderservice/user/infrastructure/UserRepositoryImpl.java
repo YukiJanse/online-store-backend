@@ -25,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         UserJpaEntity entity;
         if (user.getId() == null) {
             entity = new UserJpaEntity();
@@ -35,7 +35,7 @@ public class UserRepositoryImpl implements UserRepository {
                     .orElseThrow(() -> new UserNotFoundException("Invalid User ID=" + user.getId()));
             userJpaMapper.toEntity(user, entity);
         }
-        userJpaRepository.save(entity);
+        return userJpaMapper.toDomain(userJpaRepository.save(entity));
     }
 
     @Override
