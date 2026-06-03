@@ -9,14 +9,18 @@ import java.util.Objects;
 public class User {
     private final UserId id;
     private final Username username;
+    private FirstName firstName;
+    private LastName lastName;
     private Email email;
     private PhoneNumber phoneNumber;
     private HashedPassword password;
     private Address address;
 
-    private User(UserId id, Username username, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
+    private User(UserId id, Username username, FirstName firstName, LastName lastName, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
         this.id = id;
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -28,14 +32,16 @@ public class User {
      * ID will be created by Database
      * 
      * @param username    the username of the user, must not be null
+     * @param firstName    the firstName of the user, must not be null
+     * @param lastName    the lastName of the user, must not be null
      * @param email       the email address of the user, must not be null
      * @param phoneNumber the phone number of the user, must not be null
      * @param password    the hashed password of the user, must not be null
      * @param address     the address of the user, must not be null
      * @return a User instance with the specified properties and a null ID
      */
-    public static User create(Username username, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
-        return new User(null, username, email, phoneNumber, password, address);
+    public static User create(Username username, FirstName firstName, LastName lastName, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
+        return new User(null, username, firstName, lastName, email, phoneNumber, password, address);
     }
 
     /**
@@ -43,14 +49,16 @@ public class User {
      * 
      * @param id          the unique identifier of the user, must not be null
      * @param username    the username of the user, must not be null
+     * @param firstName    the firstName of the user, must not be null
+     * @param lastName    the lastName of the user, must not be null
      * @param email       the email address of the user, must not be null
      * @param phoneNumber the phone number of the user, must not be null
      * @param password    the hashed password of the user, must not be null
      * @param address     the address of the user, must not be null
      * @return a User instance with the specified properties and ID
      */
-    public static User reconstruct(UserId id, Username username, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
-        return new User(id, username, email, phoneNumber, password, address);
+    public static User reconstruct(UserId id, Username username, FirstName firstName, LastName lastName, Email email, PhoneNumber phoneNumber, HashedPassword password, Address address) {
+        return new User(id, username, firstName, lastName, email, phoneNumber, password, address);
     }
 
     /**
@@ -115,5 +123,37 @@ public class User {
         }
 
         this.phoneNumber = newPhoneNumber;
+    }
+
+    /**
+     * Updates the user's first name. The new first name must not be null and must be different from the current first name.
+     *
+     * @param newFirstName the new first name to set, must not be null and must be different from the current first name
+     * @throws IllegalArgumentException if the new first name is null or the same as the current first name
+     */
+    public void changeFirstName(FirstName newFirstName) {
+        Objects.requireNonNull(newFirstName, "New first name cannot be null");
+
+        if (this.firstName.equals(newFirstName)) {
+            throw new IllegalArgumentException("New first name must be different from the current first name.");
+        }
+
+        this.firstName = newFirstName;
+    }
+
+    /**
+     * Updates the user's last name. The new last name must not be null and must be different from the current last name.
+     *
+     * @param newLastName the new last name to set, must not be null and must be different from the current last name
+     * @throws IllegalArgumentException if the new last name is null or the same as the current last name
+     */
+    public void changeLastName(LastName newLastName) {
+        Objects.requireNonNull(newLastName, "New last name cannot be null");
+
+        if (this.lastName.equals(newLastName)) {
+            throw new IllegalArgumentException("New last name must be different from the current last name.");
+        }
+
+        this.lastName = newLastName;
     }
 }
