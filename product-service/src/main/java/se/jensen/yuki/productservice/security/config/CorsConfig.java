@@ -22,7 +22,7 @@ public class CorsConfig {
         List<String> allowedOrigins = List.of(
                 "http://localhost:5173",
                 "http://94.255.243.225",
-                "https://yukisonlinestore.netlify.app/"
+                "https://yukisonlinestore.netlify.app"
         );
 
         // Allow all origins
