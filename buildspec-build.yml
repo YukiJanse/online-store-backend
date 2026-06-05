@@ -1,39 +1,14 @@
-version: 0.2
+build:
+  commands:
+    - mvn clean package -DskipTests
 
-phases:
-  install:
-    runtime-versions:
-      java: corretto21
+    - echo "Building product-service image..."
+    - docker build -t $DOCKER_USERNAME/product-service:latest ./product-service
 
-  pre_build:
-    commands:
-      - echo "Logging into Docker Hub...."
-      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+    - echo "Building user-order-service image..."
+    - docker build -t $DOCKER_USERNAME/user-order-service:latest ./user-order-service
 
-  build:
-    commands:
-      - echo "Building application..."
-      - mvn clean package -DskipTests
-
-      - echo "BUILDING COMMIT:"
-      - git rev-parse HEAD
-      - git log -1 --oneline
-
-      - echo "Building product-service image..."
-      - docker build -t $DOCKER_USERNAME/product-service ./product-service
-
-      - echo "building user-order-service image..."
-      - docker build -t $DOCKER_USERNAME/user-order-service ./user-order-service
-
-  post_build:
-    commands:
-      - echo "Pushing images..."
-      - docker push $DOCKER_USERNAME/product-service
-      - docker push $DOCKER_USERNAME/user-order-service
-
-
-artifacts:
-  files:
-    - appspec.yml
-    - docker-compose.yml
-    - scripts/**/*
+post_build:
+  commands:
+    - docker push $DOCKER_USERNAME/product-service:latest
+    - docker push $DOCKER_USERNAME/user-order-service:latest
