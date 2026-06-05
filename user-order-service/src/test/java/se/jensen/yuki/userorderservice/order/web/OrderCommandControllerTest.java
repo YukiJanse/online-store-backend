@@ -66,7 +66,8 @@ class OrderCommandControllerTest {
                     }
                   ],
                   "shippingInfo": {
-                    "name": "Yuki Janse",
+                    "firstName": "Yuki",
+                    "lastName": "Janse",
                     "address": {
                       "street": "Sveavägen 123",
                       "postalCode": "113 50",
@@ -88,7 +89,7 @@ class OrderCommandControllerTest {
         verify(createOrderUseCase).execute(eq(1L), argThat(dto ->
                 dto.items().size() == 2 &&
                 dto.items().get(0).title().equals("Wireless Bluetooth Headphones") &&
-                dto.shippingInfo().name().equals("Yuki Janse") &&
+                dto.shippingInfo().firstName().equals("Yuki") &&
                 dto.status().equals("PENDING")
         ));
     }
@@ -116,7 +117,7 @@ class OrderCommandControllerTest {
                 .andExpect(jsonPath("$.items[0].productId").value(101L))
                 .andExpect(jsonPath("$.items[0].title").value("Headphones"))
                 .andExpect(jsonPath("$.items[0].quantity").value(2))
-                .andExpect(jsonPath("$.shippingInfo.name").value("Yuki"))
+                .andExpect(jsonPath("$.shippingInfo.firstName").value("Yuki"))
                 .andExpect(jsonPath("$.shippingInfo.address.city").value("Stockholm"))
                 .andExpect(jsonPath("$.status").value("PENDING"))
                 .andExpect(status().isOk());
@@ -137,7 +138,8 @@ class OrderCommandControllerTest {
 
         String json = """
                 {
-                  "name": "Yuki",
+                  "firstName": "Yuki",
+                  "lastName": "Janse",
                   "address": {
                     "street": "Sveavägen 123",
                     "postalCode": "113 50",
@@ -156,14 +158,14 @@ class OrderCommandControllerTest {
                 .andExpect(jsonPath("$.items[0].productId").value(101L))
                 .andExpect(jsonPath("$.items[0].title").value("Headphones"))
                 .andExpect(jsonPath("$.items[0].quantity").value(2))
-                .andExpect(jsonPath("$.shippingInfo.name").value("Yuki"))
+                .andExpect(jsonPath("$.shippingInfo.firstName").value("Yuki"))
                 .andExpect(jsonPath("$.shippingInfo.address.city").value("Stockholm"))
                 .andExpect(jsonPath("$.status").value("PENDING"))
                 .andExpect(status().isOk());
 
         verify(modifyOrderShippingInfoUseCase)
                 .execute(eq(1L), argThat(dto ->
-                        dto.name().equals("Yuki")
+                        dto.firstName().equals("Yuki")
                 ));
     }
 

@@ -1,6 +1,7 @@
 package se.jensen.yuki.userorderservice.order.domain.vo;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,29 +13,36 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor( access = AccessLevel.PROTECTED)
 public class ShippingInfo {
-    private String name;
+    private String firstName;
+    private String lastName;
+    @Embedded
     private Address address;
 
-    private ShippingInfo(String name, Address address) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name can not be blank");
+    private ShippingInfo(String firstName, String lastName, Address address) {
+        if (firstName == null || firstName.isBlank()) {
+            throw new IllegalArgumentException("First name can not be blank");
+        }
+
+        if (lastName == null || lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name can not be blank");
         }
 
         if (address == null) {
             throw new IllegalArgumentException("Address can not be null");
         }
 
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
     }
 
-    public static ShippingInfo of(String name, Address address) {
-        return new ShippingInfo(name, address);
+    public static ShippingInfo of(String firstName, String lastName, Address address) {
+        return new ShippingInfo(firstName, lastName, address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address);
+        return Objects.hash(firstName, lastName, address);
     }
 
     @Override
@@ -42,12 +50,13 @@ public class ShippingInfo {
         if (obj == this) return true;
         if (!(obj instanceof ShippingInfo shippingInfo)) return false;
 
-        return name.equals(shippingInfo.getName())
+        return firstName.equals(shippingInfo.getFirstName())
+                && lastName.equals(shippingInfo.getLastName())
                 && address.equals(shippingInfo.getAddress());
     }
 
     @Override
     public String toString() {
-        return "name: " + name + ", address: " + address;
+        return "firstName: " + firstName + ", lastName: " + lastName + ", address: " + address;
     }
 }

@@ -19,7 +19,8 @@ public class ModifyOrderShippingInfoUseCase {
 
     public OrderDetailDTO execute(Long orderId, ShippingInfoDTO shippingInfoDTO) {
         Order targetOrder = orderRepository.findById(OrderId.of(orderId));
-        String newName = shippingInfoDTO.name();
+        String newFirstName = shippingInfoDTO.firstName();
+        String newLastName = shippingInfoDTO.lastName();
         Address newAddress = Address.of(
                 shippingInfoDTO.address().street(),
                 shippingInfoDTO.address().postalCode(),
@@ -27,7 +28,7 @@ public class ModifyOrderShippingInfoUseCase {
                 shippingInfoDTO.address().country()
         );
 
-        ShippingInfo newShippingInfo = ShippingInfo.of(newName , newAddress);
+        ShippingInfo newShippingInfo = ShippingInfo.of(newFirstName, newLastName, newAddress);
 
         targetOrder.changeShippingInfo(newShippingInfo);
 

@@ -6,7 +6,6 @@ import se.jensen.yuki.userorderservice.order.domain.OrderStatus;
 import se.jensen.yuki.userorderservice.order.domain.vo.OrderItem;
 import se.jensen.yuki.userorderservice.order.domain.vo.ShippingInfo;
 import se.jensen.yuki.userorderservice.order.web.dto.*;
-import se.jensen.yuki.userorderservice.order.web.dto.*;
 import se.jensen.yuki.userorderservice.user.domain.vo.Address;
 import se.jensen.yuki.userorderservice.user.domain.vo.UserId;
 
@@ -41,7 +40,8 @@ public class OrderCommandMapper {
 
     private ShippingInfo toShippingInfo(ShippingInfoDTO dto) {
         return ShippingInfo.of(
-                dto.name(),
+                dto.firstName(),
+                dto.lastName(),
                 toAddress(dto.address())
         );
     }
@@ -67,7 +67,8 @@ public class OrderCommandMapper {
 
     private ShippingInfoDTO toShippingInfoDTO(ShippingInfo shippingInfo) {
         return ShippingInfoDTO.builder()
-                .name(shippingInfo.getName())
+                .firstName(shippingInfo.getFirstName())
+                .lastName(shippingInfo.getLastName())
                 .address(toAddressDTO(shippingInfo.getAddress()))
                 .build();
     }

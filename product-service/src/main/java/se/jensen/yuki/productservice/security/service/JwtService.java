@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @Service
 public class JwtService {
     private final long expirationMs;
@@ -51,6 +53,7 @@ public class JwtService {
             parseClaims(jwt);
             return true;
         } catch (JwtException e) {
+            log.error("JWT validation failed", e);
             return false;
         }
     }
