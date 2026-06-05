@@ -72,10 +72,10 @@ public class UserCommandController {
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false) // TODO: set to true in production
+                .secure(true)
                 .path("/")
                 .maxAge(60L * 60 * 24 * 30)
-                .sameSite("Strict")
+                .sameSite("None")
                 .build();
         response.addHeader("Set-Cookie", cookie.toString());
     }
