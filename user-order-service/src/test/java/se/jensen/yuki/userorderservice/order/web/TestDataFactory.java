@@ -24,7 +24,8 @@ public class TestDataFactory {
                     ))
                     .shippingInfo(
                             ShippingInfoDTO.builder()
-                                    .name("Yuki")
+                                    .firstName("Yuki")
+                                    .lastName("Janse")
                                     .address(
                                             AddressDTO.builder()
                                                     .street("Street")

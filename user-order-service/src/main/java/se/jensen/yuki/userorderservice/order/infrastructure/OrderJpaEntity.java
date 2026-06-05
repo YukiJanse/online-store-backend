@@ -35,7 +35,8 @@ public class OrderJpaEntity {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "shipping_name")),
+            @AttributeOverride(name = "firstName", column = @Column(name = "shipping_first_name")),
+            @AttributeOverride(name = "lastName", column = @Column(name = "shipping_last_name")),
             @AttributeOverride(name = "address.street", column = @Column(name = "shipping_street")),
             @AttributeOverride(name = "address.city", column = @Column(name = "shipping_city")),
             @AttributeOverride(name = "address.postalCode", column = @Column(name = "shipping_postal_code")),
