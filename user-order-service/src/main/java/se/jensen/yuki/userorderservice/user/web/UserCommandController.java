@@ -80,7 +80,7 @@ public class UserCommandController {
         response.addHeader("Set-Cookie", cookie.toString());
     }
 
-    @PutMapping("names")
+    @PutMapping("/names")
     public ResponseEntity<UserInfoDTO> changeNames(@RequestBody ChangeNamesRequestDTO requestDTO) {
         return ResponseEntity
                 .ok()
