@@ -2,6 +2,7 @@ package se.jensen.yuki.userorderservice.user.web;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import se.jensen.yuki.userorderservice.user.web.dto.*;
 
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/users")
@@ -24,6 +26,7 @@ public class UserCommandController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> registerUser(@RequestBody AuthRegisterRequestDTO requestDTO,
                                           HttpServletResponse response) {
+        log.info("starting to register user");
         TokenPair tokenPair = registerUserUseCase.execute(requestDTO);
 
         setRefreshTokenCookie(response, tokenPair.refreshToken());
@@ -34,6 +37,7 @@ public class UserCommandController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO requestDTO,
                                                  HttpServletResponse response) {
+        log.info("starting to login");
         TokenPair tokenPair = loginUserUseCase.execute(requestDTO);
 
         setRefreshTokenCookie(response, tokenPair.refreshToken());
@@ -44,6 +48,7 @@ public class UserCommandController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponseDTO> refresh(@CookieValue(value = "refreshToken", required = false) String refreshToken,
                                      HttpServletResponse response) {
+        log.info("starting to create refreshToken");
         if (refreshToken == null) {
             return ResponseEntity.status(401).build();
         }
@@ -70,6 +75,7 @@ public class UserCommandController {
     }
 
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        log.info("Setting refresh token cookie");
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
                 .secure(true)
@@ -82,6 +88,7 @@ public class UserCommandController {
 
     @PutMapping("/names")
     public ResponseEntity<UserInfoDTO> changeNames(@RequestBody ChangeNamesRequestDTO requestDTO) {
+        log.info("starting to change names");
         return ResponseEntity
                 .ok()
                 .body(changeNamesUseCase.execute(currentUserProvider.currentUserId(), requestDTO));
