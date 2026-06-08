@@ -7,7 +7,7 @@ import se.jensen.yuki.userorderservice.user.domain.vo.*;
 @Component
 public class UserJpaMapper {
     public void toEntity(User user, UserJpaEntity entity) {
-        entity.setId(user.getId().getValue());
+        entity.setId(user.getId() != null ? user.getId().getValue() : null);
         entity.setUsername(user.getUsername().getValue());
         entity.setFirstName(user.getFirstName().getValue());
         entity.setLastName(user.getLastName().getValue());

@@ -24,14 +24,6 @@ public record AuthRegisterRequestDTO(
 
         @NotBlank(message = "phoneNumber can't be empty")
         @Size(max = 12, message = "phoneNumber must be 12 letters")
-        String phoneNumber,
-
-        String street,
-
-        String postalCode,
-
-        String city,
-
-        String country
+        String phoneNumber
         ) {
 }
