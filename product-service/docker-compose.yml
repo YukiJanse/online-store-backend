@@ -1,0 +1,12 @@
+services:
+  product-service:
+    image: yukijanse/product-service:latest
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}

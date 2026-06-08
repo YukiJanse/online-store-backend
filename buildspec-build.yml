@@ -29,7 +29,17 @@ phases:
 
 
 artifacts:
-  files:
-    - appspec.yml
-    - docker-compose.yml
-    - scripts/**/*
+  secondary-artifacts:
+    ProductArtifact:
+      base-directory: product-service
+      files:
+        - appspec.yml
+        - docker-compose.yml
+        - scripts/**/*
+
+    UserOrderArtifact:
+      base-directory: user-order-service
+      files:
+        - appspec.yml
+        - docker-compose.yml
+        - scripts/**/*
