@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.jensen.yuki.productservice.application.ProductService;
+import se.jensen.yuki.productservice.web.dto.InventoryResponseDTO;
 import se.jensen.yuki.productservice.web.dto.ProductDTO;
+import se.jensen.yuki.productservice.web.dto.ReserveInventoryRequestDTO;
+import se.jensen.yuki.productservice.web.dto.ReserveInventoryResponseDTO;
 
 import java.util.List;
 
@@ -38,9 +41,16 @@ public class ProductController {
     }
 
     @GetMapping("/inventory/{productId}")
-    public ResponseEntity<Void> checkInventory(@PathVariable Long productId, @RequestParam int quantity) {
-        productService.hasEnoughInventory(productId, quantity);
+    public ResponseEntity<InventoryResponseDTO> checkInventory(@PathVariable Long productId, @RequestParam int quantity) {
+        return ResponseEntity
+                .ok()
+                .body(productService.hasEnoughInventory(productId, quantity));
+    }
 
-        return ResponseEntity.ok().build();
+    @PutMapping("/reserve")
+    public ResponseEntity<ReserveInventoryResponseDTO> reserveInventory(@RequestBody ReserveInventoryRequestDTO requestDTO) {
+        return ResponseEntity
+                .ok()
+                .body(productService.reserveInventory(requestDTO));
     }
 }

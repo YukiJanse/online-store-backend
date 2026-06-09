@@ -10,10 +10,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 public class WebClientConfig {
     @Bean
-    public WebClient webClient(@Value("${webclient.url}") String url) {
-        log.debug("WebClient base url: {}", url);
+    public WebClient productWebClient(
+            @Value("${productapi.base-url}") String baseUrl
+    ) {
         return WebClient.builder()
-                .baseUrl(url)
+                .baseUrl(baseUrl)
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package se.jensen.yuki.userorderservice.order.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,7 +92,7 @@ class OrderCommandControllerTest {
                 dto.items().get(0).title().equals("Wireless Bluetooth Headphones") &&
                 dto.shippingInfo().firstName().equals("Yuki") &&
                 dto.status().equals("PENDING")
-        ));
+        ), any(HttpServletRequest.class));
     }
 
     @Test

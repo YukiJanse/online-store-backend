@@ -1,5 +1,6 @@
 package se.jensen.yuki.userorderservice.order.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,12 @@ public class OrderCommandController {
     private final CurrentUserProvider currentUserProvider;
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(@RequestBody CreateOrderRequestDTO requestDTO) {
+    public ResponseEntity<Void> createOrder(
+            HttpServletRequest request,
+            @RequestBody CreateOrderRequestDTO requestDTO
+    ) {
         Long userId = currentUserProvider.currentUserId();
-        createOrderUseCase.execute(userId, requestDTO);
+        createOrderUseCase.execute(userId, requestDTO, request);
         return ResponseEntity.noContent().build();
     }
 
