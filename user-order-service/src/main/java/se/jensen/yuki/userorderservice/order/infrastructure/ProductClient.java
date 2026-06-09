@@ -47,9 +47,22 @@ public class ProductClient {
                 .retrieve()
                 .onStatus(
                         HttpStatusCode::isError,
-                        response -> Mono.error(
-                                new RuntimeException("Product API error")
-                        )
+                        response -> response.bodyToMono(String.class)
+                                .flatMap(body -> {
+                                    log.error("""
+                                        Product API ERROR
+                                        status: {}
+                                        body: {}
+                                        headers: {}
+                                    """,
+                                    response.statusCode(),
+                                    body,
+                                    response.headers().asHttpHeaders());
+
+                                    return Mono.error(new RuntimeException(
+                                            "Product API error: " + response.statusCode() + " body=" + body
+                                    ));
+                                })
                 )
                 .bodyToMono(ReserveInventoryResponseDTO.class)
                 .doOnNext(response -> log.info("Received response: {}", response))
