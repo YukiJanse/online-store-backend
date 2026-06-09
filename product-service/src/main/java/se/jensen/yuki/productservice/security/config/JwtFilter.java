@@ -32,6 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
 
+        log.debug("Authorization header = {}", authHeader);
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             log.debug("No auth header");
             filterChain.doFilter(request, response);
@@ -39,6 +41,8 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         final String jwt = authHeader.substring(7);
+
+        log.info("JWT extracted = {}", jwt);
 
         if (!jwtService.validateToken(jwt)) {
             log.warn("invalid JWT token");
@@ -65,5 +69,6 @@ public class JwtFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
+        log.debug("Ending JwtFilter...");
     }
 }
