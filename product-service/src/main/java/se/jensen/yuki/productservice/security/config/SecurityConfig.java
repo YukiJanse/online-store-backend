@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests( auth -> auth
-                        .requestMatchers("/v1/admin/**", "/v1/products/sync").hasRole("ADMIN")
+                        .requestMatchers("/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/products/inventory/**").authenticated()
                         .requestMatchers("/actuator/health", "/v1/products/**","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
