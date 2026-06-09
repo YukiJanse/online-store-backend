@@ -17,21 +17,21 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping("/public")
     public ResponseEntity<List<ProductDTO>> getProducts() {
         return ResponseEntity
                 .ok()
                 .body(productService.getAllProducts());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/{id}")
     public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
         return ResponseEntity
                 .ok()
                 .body(productService.getProductById(id));
     }
 
-    @PostMapping("/sync")
+    @PostMapping("/public/sync")
     public ResponseEntity<Void> fetchProductsToDatabase() {
         productService.fetchProductsToDatabase();
 
