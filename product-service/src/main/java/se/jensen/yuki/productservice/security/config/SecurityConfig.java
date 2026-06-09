@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers("/v1/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/v1/products/inventory/**").authenticated()
+                        .requestMatchers("/v1/products/inventory/**", "/v1/products/reserve").authenticated()
                         .requestMatchers("/actuator/health", "/v1/products/**","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
