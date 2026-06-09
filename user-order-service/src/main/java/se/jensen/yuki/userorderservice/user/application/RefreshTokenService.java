@@ -2,6 +2,7 @@ package se.jensen.yuki.userorderservice.user.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.jensen.yuki.userorderservice.security.service.JwtService;
 import se.jensen.yuki.userorderservice.user.domain.RefreshToken;
 import se.jensen.yuki.userorderservice.user.infrastructure.RefreshTokenRepository;
@@ -63,4 +64,8 @@ public class RefreshTokenService {
         refreshTokenRepository.deleteByUserId(userId);
     }
 
+    @Transactional
+    public void delete(String refreshToken) {
+        refreshTokenRepository.deleteByToken(refreshToken);
+    }
 }

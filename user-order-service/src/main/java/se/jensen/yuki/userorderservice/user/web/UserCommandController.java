@@ -102,4 +102,28 @@ public class UserCommandController {
                 .ok()
                 .body(changeProfileUseCase.execute(currentUserProvider.currentUserId(), requestDTO));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @CookieValue(value = "refreshToken", required = false)
+            String refreshToken,
+            HttpServletResponse response
+    ) {
+
+        if (refreshToken != null) {
+            refreshTokenService.delete(refreshToken);
+        }
+
+        ResponseCookie clear = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .sameSite("None")
+                .maxAge(0)
+                .build();
+
+        response.addHeader("Set-Cookie", clear.toString());
+
+        return ResponseEntity.noContent().build();
+    }
 }
