@@ -22,6 +22,7 @@ public class UserCommandController {
     private final RefreshTokenService refreshTokenService;
     private final ChangeNamesUseCase changeNamesUseCase;
     private final CurrentUserProvider currentUserProvider;
+    private final ChangeProfileUseCase changeProfileUseCase;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> registerUser(@RequestBody AuthRegisterRequestDTO requestDTO,
@@ -92,5 +93,37 @@ public class UserCommandController {
         return ResponseEntity
                 .ok()
                 .body(changeNamesUseCase.execute(currentUserProvider.currentUserId(), requestDTO));
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<UserInfoDTO> changeProfile(@RequestBody ChangeProfileRequestDTO requestDTO) {
+        log.info("starting to change names");
+        return ResponseEntity
+                .ok()
+                .body(changeProfileUseCase.execute(currentUserProvider.currentUserId(), requestDTO));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @CookieValue(value = "refreshToken", required = false)
+            String refreshToken,
+            HttpServletResponse response
+    ) {
+
+        if (refreshToken != null) {
+            refreshTokenService.delete(refreshToken);
+        }
+
+        ResponseCookie clear = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .sameSite("None")
+                .maxAge(0)
+                .build();
+
+        response.addHeader("Set-Cookie", clear.toString());
+
+        return ResponseEntity.noContent().build();
     }
 }

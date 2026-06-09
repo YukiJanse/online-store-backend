@@ -165,14 +165,26 @@ public class User {
      * @throws IllegalArgumentException if the new last name is null or the same as the current last name
      */
     public void changeNames(FirstName newFirstName, LastName newLastName) {
-        Objects.requireNonNull(newFirstName, "New first name cannot be null");
-        Objects.requireNonNull(newLastName, "New last name cannot be null");
-
         if (this.firstName.equals(newFirstName) && this.lastName.equals(newLastName)) {
             throw new IllegalArgumentException("Either new first or last name must be different from the current one.");
         }
 
         this.firstName = newFirstName;
         this.lastName = newLastName;
+    }
+
+    public void changeProfile(FirstName firstName, LastName lastName, PhoneNumber phoneNumber, Address address) {
+        if (this.firstName.equals(firstName)
+                && this.lastName.equals(lastName)
+                && this.phoneNumber.equals(phoneNumber)
+                && this.address.equals(address)
+        ) {
+            throw new IllegalArgumentException("No difference between old and new profile. It must be changed");
+        }
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 }
